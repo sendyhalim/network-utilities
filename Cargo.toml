@@ -7,4 +7,15 @@ edition = "2021"
 
 [dependencies]
 dns-lookup = "2.0.4"
+etherparse = "0.13.0"
+libc = "0.2.151"
 socket2 = { version = "0.5.5", features = ["all"] }
+
+[[bin]]
+name = "traceroute-poc"
+path = "src/main/traceroute-poc.rs"
+
+
+[[bin]]
+name = "traceroute-poc-ip-identification"
+path = "src/main/traceroute-poc-ip-identification.rs"
