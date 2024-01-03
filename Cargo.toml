@@ -17,5 +17,5 @@ path = "src/main/traceroute-poc.rs"
 
 
 [[bin]]
-name = "traceroute-poc-ip-identification"
-path = "src/main/traceroute-poc-ip-identification.rs"
+name = "traceroute-poc-raw-socket"
+path = "src/main/traceroute-poc-raw-socket.rs"
