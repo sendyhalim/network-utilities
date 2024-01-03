@@ -1,11 +1,8 @@
-use socket2::{Domain, SockAddr, Socket};
+use socket2::{Domain, Socket};
 use std::mem::MaybeUninit;
 use std::net::IpAddr;
-use std::net::Ipv4Addr;
 use std::net::SocketAddr;
-use std::net::SocketAddrV4;
 use std::net::UdpSocket;
-use std::os::fd::AsRawFd;
 use std::time::Duration;
 
 fn main() -> std::io::Result<()> {
