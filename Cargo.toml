@@ -11,11 +11,15 @@ etherparse = "0.13.0"
 libc = "0.2.151"
 socket2 = { version = "0.5.5", features = ["all"] }
 
+[lib]
+name = "lib"
+path = "src/lib/lib.rs"
+
 [[bin]]
 name = "traceroute-poc"
-path = "src/main/traceroute-poc.rs"
+path = "src/bin/traceroute-poc.rs"
 
 
 [[bin]]
 name = "traceroute-poc-raw-socket"
-path = "src/main/traceroute-poc-raw-socket.rs"
+path = "src/bin/traceroute-poc-raw-socket.rs"
