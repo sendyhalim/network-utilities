@@ -6,9 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dns-lookup = "2.0.4"
 etherparse = "0.13.0"
-libc = "0.2.151"
 socket2 = { version = "0.5.5", features = ["all"] }
 
 [lib]
@@ -16,10 +14,10 @@ name = "lib"
 path = "src/lib/lib.rs"
 
 [[bin]]
-name = "traceroute-poc"
-path = "src/bin/traceroute-poc.rs"
+name = "traceroute_poc"
+path = "src/bin/traceroute_poc.rs"
 
 
 [[bin]]
-name = "traceroute-poc-raw-socket"
-path = "src/bin/traceroute-poc-raw-socket.rs"
+name = "traceroute_poc_raw_socket"
+path = "src/bin/traceroute_poc_raw_socket.rs"

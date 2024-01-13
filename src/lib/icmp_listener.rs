@@ -8,8 +8,6 @@ use std::time::Duration;
 /// 1. Start the icmp listener.
 /// 2. Open another shell session and do traceroute to any host.
 pub fn start_icmp_listener() {
-  println!("Starting icmp listener in the background...");
-
   let icmp_socket = Socket::new(
     Domain::IPV4,
     socket2::Type::RAW,
@@ -36,7 +34,7 @@ pub fn start_icmp_listener() {
         let icmpv4_payload = etherparse::Icmpv4Slice::from_slice(icmpv4_payload_bytes).unwrap();
 
         println!(
-            "Got some response size: {}\nipv4 raw resp: {:?}\nip address:{}\nICMP type: {:?}, ICMP code: {}",
+            "Got some response size: {}\nIPv4 raw resp: {:#?}\nip address:{}\nICMP type: {:?}, ICMP code: {}",
             size,
             ipv4_header,
             addr.as_socket_ipv4().unwrap().to_string(),

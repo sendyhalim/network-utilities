@@ -9,24 +9,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "96d30a06541fbafbc7f82ed10c06164cfbd2c401138f6addd8404629c4b16711"
 
 [[package]]
-name = "cfg-if"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
-
-[[package]]
-name = "dns-lookup"
-version = "2.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e5766087c2235fec47fafa4cfecc81e494ee679d0fd4a59887ea0919bfb0e4fc"
-dependencies = [
- "cfg-if",
- "libc",
- "socket2",
- "windows-sys",
-]
-
-[[package]]
 name = "etherparse"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -39,9 +21,7 @@ dependencies = [
 name = "ip-utilities"
 version = "0.1.0"
 dependencies = [
- "dns-lookup",
  "etherparse",
- "libc",
  "socket2",
 ]
 
