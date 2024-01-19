@@ -53,7 +53,7 @@ fn main() -> std::io::Result<()> {
 
   let ipv4_addr: Ipv4Addr = udp_socket_addr_dest.ip().to_string().parse().unwrap();
 
-  let ipv4_header = etherparse::Ipv4Header::new(
+  let mut ipv4_header = etherparse::Ipv4Header::new(
     udp_packet.len() as u16,
     hop_limit as u8,
     17,
@@ -65,6 +65,11 @@ fn main() -> std::io::Result<()> {
       .octets(),
     ipv4_addr.octets(),
   );
+
+  // The default value is true.
+  // The DF bit is not set when observing traceroute
+  // through tcpdump, so we're just mimicking the behaviour here.
+  ipv4_header.dont_fragment = false;
 
   // We want to set ip header manually in the payload
   ip_raw_socket.set_header_included(true).unwrap();
