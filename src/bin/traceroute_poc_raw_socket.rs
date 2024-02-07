@@ -70,7 +70,7 @@ fn main() -> std::io::Result<()> {
   // The DF bit is not set when observing traceroute
   // through tcpdump, so we're just mimicking the behaviour here.
   ipv4_header.dont_fragment = false;
-  ipv4_header.identification = 0;
+  ipv4_header.identification = 998;
 
   // We want to set ip header manually in the payload
   ip_raw_socket.set_header_included(true).unwrap();
@@ -91,8 +91,10 @@ fn main() -> std::io::Result<()> {
 
   // Start ICMP listener before sending the payload
   // ----------------------------------------
-  let icmp_listener_thread_handle = std::thread::spawn(|| {
-    lib::icmp_listener::start_icmp_listener(|_| true);
+  let icmp_listener_thread_handle = std::thread::spawn(move || {
+    lib::icmp_listener::start_icmp_listener(|previous_ip_datagram_identification| {
+      return previous_ip_datagram_identification == ipv4_header.identification;
+    });
   });
 
   // Send the probe
