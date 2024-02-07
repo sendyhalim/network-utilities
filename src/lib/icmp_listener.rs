@@ -19,7 +19,7 @@ pub fn start_icmp_listener() {
     .set_read_timeout(Some(Duration::from_secs(1)))
     .unwrap();
 
-  let mut icmp_resp: [MaybeUninit<u8>; 28] = unsafe { MaybeUninit::uninit().assume_init() };
+  let mut icmp_resp: [MaybeUninit<u8>; 60] = unsafe { MaybeUninit::uninit().assume_init() };
 
   loop {
     match icmp_socket.recv_from(&mut icmp_resp) {
@@ -33,13 +33,17 @@ pub fn start_icmp_listener() {
           etherparse::Ipv4Header::from_slice(&res_bytes).unwrap();
         let icmpv4_payload = etherparse::Icmpv4Slice::from_slice(icmpv4_payload_bytes).unwrap();
 
+        let (maybe_ip_field, _) =
+          etherparse::Ipv4Header::from_slice(icmpv4_payload.payload()).unwrap();
+
         println!(
-            "Got some response size: {}\nIPv4 raw resp: {:#?}\nip address:{}\nICMP type: {:?}, ICMP code: {}",
+            "Got some response size: {}\nIPv4 raw resp: {:#?}\nip address:{}\nICMP type: {:?}, ICMP code: {}, ICMP DATA: {:?}",
             size,
             ipv4_header,
             addr.as_socket_ipv4().unwrap().to_string(),
             icmpv4_payload.icmp_type(),
-            icmpv4_payload.code_u8()
+            icmpv4_payload.code_u8(),
+            maybe_ip_field
           );
       }
       Err(err) => {

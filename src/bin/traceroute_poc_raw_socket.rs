@@ -70,6 +70,7 @@ fn main() -> std::io::Result<()> {
   // The DF bit is not set when observing traceroute
   // through tcpdump, so we're just mimicking the behaviour here.
   ipv4_header.dont_fragment = false;
+  ipv4_header.identification = 0;
 
   // We want to set ip header manually in the payload
   ip_raw_socket.set_header_included(true).unwrap();
