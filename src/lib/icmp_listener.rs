@@ -2,12 +2,17 @@ use socket2::{Domain, Socket};
 use std::mem::MaybeUninit;
 use std::time::Duration;
 
+type IpDatagramId = u16;
+
 /// Starts an ICMP listener that will listen every incoming ICMP packet.
 /// The listener will receive all ICMP packets sent to the network interface,
 /// to explicitly test this:
 /// 1. Start the icmp listener.
 /// 2. Open another shell session and do traceroute to any host.
-pub fn start_icmp_listener() {
+pub fn start_icmp_listener<P>(packet_filter: P)
+where
+  P: Fn(IpDatagramId) -> bool,
+{
   let icmp_socket = Socket::new(
     Domain::IPV4,
     socket2::Type::RAW,
@@ -35,6 +40,10 @@ pub fn start_icmp_listener() {
 
         let (maybe_ip_field, _) =
           etherparse::Ipv4Header::from_slice(icmpv4_payload.payload()).unwrap();
+
+        if !packet_filter(maybe_ip_field.identification) {
+          return;
+        }
 
         println!(
             "Got some response size: {}\nIPv4 raw resp: {:#?}\nip address:{}\nICMP type: {:?}, ICMP code: {}, ICMP DATA: {:?}",

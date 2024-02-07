@@ -34,7 +34,7 @@ fn main() -> std::io::Result<()> {
     .unwrap()
     .to_owned();
 
-  let hop_limit: u32 = 2;
+  let hop_limit: u32 = 6;
 
   let network_interfaces = pnet::datalink::interfaces()
     .into_iter()
@@ -115,7 +115,7 @@ fn main() -> std::io::Result<()> {
   // Start ICMP listener before sending the payload
   // ----------------------------------------
   let icmp_listener_thread_handle = std::thread::spawn(|| {
-    lib::icmp_listener::start_icmp_listener();
+    lib::icmp_listener::start_icmp_listener(|_| true);
   });
 
   // Send the probe
@@ -151,10 +151,10 @@ fn main() -> std::io::Result<()> {
 
   sender.send_to(ethernet_frame, None).unwrap().unwrap();
 
-  // println!(
-  //   "Sent {:#?} ethernet payload",
-  //   etherparse::Ethernet2Header::from_bytes(ethernet_frame[0..14].try_into().unwrap())
-  // );
+  println!(
+    "Sent {:#?} ethernet payload",
+    etherparse::Ethernet2Header::from_bytes(ethernet_frame[0..14].try_into().unwrap())
+  );
 
   icmp_listener_thread_handle.join().unwrap();
 

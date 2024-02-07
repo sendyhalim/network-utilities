@@ -92,7 +92,7 @@ fn main() -> std::io::Result<()> {
   // Start ICMP listener before sending the payload
   // ----------------------------------------
   let icmp_listener_thread_handle = std::thread::spawn(|| {
-    lib::icmp_listener::start_icmp_listener();
+    lib::icmp_listener::start_icmp_listener(|_| true);
   });
 
   // Send the probe

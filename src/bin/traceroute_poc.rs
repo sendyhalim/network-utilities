@@ -28,7 +28,7 @@ fn main() -> std::io::Result<()> {
   let icmp_listener_handle = std::thread::spawn(|| {
     println!("Starting icmp listener in the background...");
 
-    lib::icmp_listener::start_icmp_listener();
+    lib::icmp_listener::start_icmp_listener(|_| true);
   });
 
   udp_socket = UdpSocket::bind(udp_socket_addr_client).unwrap();
